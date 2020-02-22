@@ -9,11 +9,17 @@ def lambda_handler(event, context):
     file_name = event['Records'][0]['s3']['object']['key']
     
     print(str(event))
+    print(str(bucket))
+    print(str(file_name))
     
-    json_object = s3_client.get_object(Bucket=bucket, Key=file_name)
-    jsonFileReader = json_object.read(json_object)
-    jsonArray = json.loads(jsonFileReader)
+    json_object = s3_client.get_object(Bucket=bucket,Key=file_name)
+   
     
     table = dynamodb.Table('logs')
-    table.put_item(Item=jsonArray)
+    table.put_item(Item={
+        'id':'1' ,
+        'name': file_name,
+        'bucket_name': bucket
+        
+    })
     
