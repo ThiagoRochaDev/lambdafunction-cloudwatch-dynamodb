@@ -1,5 +1,6 @@
 import json
 import boto3
+import uuid
 
 s3_client = boto3.client('s3')
 dynamodb = boto3.resource('dynamodb')
@@ -13,11 +14,12 @@ def lambda_handler(event, context):
     print(str(file_name))
     
     json_object = s3_client.get_object(Bucket=bucket,Key=file_name)
-   
+    id_bd = str(uuid.uuid4())
+    
     
     table = dynamodb.Table('logs')
     table.put_item(Item={
-        'id':'1' ,
+        'id': id_bd,
         'name': file_name,
         'bucket_name': bucket
         
