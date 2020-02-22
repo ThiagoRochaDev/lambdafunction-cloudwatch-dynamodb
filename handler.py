@@ -17,11 +17,12 @@ def lambda_handler(event, context):
     id_bd = str(uuid.uuid4())
     
     
-    table = dynamodb.Table('logs')
+    table = dynamodb.Table('Logs')
     table.put_item(Item={
         'id': id_bd,
-        'name': file_name,
+        'arquivo_name': file_name,
         'bucket_name': bucket
         
     })
     
+   
